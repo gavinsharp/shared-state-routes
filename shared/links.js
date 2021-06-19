@@ -1,8 +1,13 @@
 import Link from "next/link";
+import { useCallback } from "react";
 import { useSharedContext } from "./wrapper";
 
 export default function Links() {
-  const sharedContext = useSharedContext();
+  const { sharedState, setSharedState } = useSharedContext();
+  const clickHandler = useCallback(() => {
+    setSharedState(Math.random());
+  }, []);
+
   return (
     <div style={{ display: "flex", flexDirection: "column", margin: 20 }}>
       <Link href="/">
@@ -14,7 +19,8 @@ export default function Links() {
       <Link href="/notshared">
         <a>Not shared</a>
       </Link>
-      {sharedContext}
+      {sharedState}
+      <button onClick={clickHandler}>Update shared state</button>
     </div>
   );
 }
